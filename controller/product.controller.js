@@ -33,7 +33,6 @@ exports.add = (req,res,next)=>{
                     image : result2
                 }).save()
                 .then((result)=>{
-                    console.log(" here 1");
                     response.status=true;
                     response.message='product added successfully';
                     response.data=result;

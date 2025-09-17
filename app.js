@@ -12,6 +12,7 @@ var userRouter = require('./router/user.router')
 var productRouter=require('./router/product.router')
 var categoryRouter= require('./router/category.router')
 var bannerRouter = require('./router/banner.router');
+var orderRouter = require('./router/order.router');
 var config = require('./config');
 var common = require('./common/common');
 
@@ -41,6 +42,7 @@ app.use('/api/user',userRouter);
 app.use('/api/product',productRouter);
 app.use('/api/category',categoryRouter);
 app.use('/api/banner',bannerRouter);
+app.use('/api/order',orderRouter);
 
 if (!fs.existsSync('public/ProductImage')) {
     fs.mkdirSync('public/ProductImage')
