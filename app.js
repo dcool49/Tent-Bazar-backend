@@ -15,8 +15,9 @@ var bannerRouter = require('./router/banner.router');
 var orderRouter = require('./router/order.router');
 var config = require('./config');
 var common = require('./common/common');
-
+var cors = require('cors')
 var app = express();
+
 mongoose.connect("mongodb://localhost:27017/Catelogue",(error,result)=>{
   if (error) {
       console.error(" database connectivity ",error);
@@ -29,6 +30,7 @@ mongoose.connect("mongodb://localhost:27017/Catelogue",(error,result)=>{
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
