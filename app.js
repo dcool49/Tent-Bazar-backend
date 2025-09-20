@@ -13,6 +13,7 @@ var productRouter=require('./router/product.router')
 var categoryRouter= require('./router/category.router')
 var bannerRouter = require('./router/banner.router');
 var orderRouter = require('./router/order.router');
+var urlsRouter = require('./router/urls.router');
 var config = require('./config');
 var common = require('./common/common');
 var cors = require('cors')
@@ -45,6 +46,7 @@ app.use('/api/product',productRouter);
 app.use('/api/category',categoryRouter);
 app.use('/api/banner',bannerRouter);
 app.use('/api/order',orderRouter);
+app.use('/api/urls',urlsRouter);
 
 if (!fs.existsSync('public/ProductImage')) {
     fs.mkdirSync('public/ProductImage')

@@ -3,7 +3,7 @@ var category = require('./category.model')
 
 
 var Product = mongoose.Schema({
-    productName:{type:String},
+    productName:{type:String, unique : true},
     category_id:{type:mongoose.Types.ObjectId,required:true,refer: category},
     price:{type:String},
     product_selling_price : { type: Number,default:null},

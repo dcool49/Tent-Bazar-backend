@@ -6,11 +6,13 @@ router.post('/add', category.add);
 
 router.get('/fetch',category.fetch);
 
-router.delete('/deleteimage',category.imageDelete)
+router.delete('/deleteimage',category.imageDelete);
 
-router.put('/update',category.update)
+router.put('/update',category.update);
 
-router.delete('/delete', category.delete)
+router.put('/updateImage',category.updateImage);
+
+router.delete('/delete', category.delete);
 
 //router.delete('/delete',category.delete)
 
