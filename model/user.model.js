@@ -2,17 +2,23 @@ var mongoose = require('mongoose');
 
 var User = mongoose.Schema({
     name:{type:String},
-    password:{type:String},
-    mobileNumber:{type:String, required:true, unique : true},
+    email:{type:String},
+    companyName:{type:String,default:null},
+    password:{type:String, required:true},
+    address:{type:String},
     addressLine:{type:String,default:null},
+    addressLine2:{type:String,default:null},
     city:{type:String,default:null},
     state:{type:String,default:null},
     pinCode:{type:Number,default:null},
+    country:{type:String,default:null},
+    mobile:{type:Number, required:true},
     role: {
         type:String, 
-        enum :['Admin','Manager','Seller','User'],
-        default:'User'
-    }
+        enum :['admin','user'],
+        default:'user'
+    },
+    profile_pic:{ type:String }
 },{
     timestamps : true
 })
