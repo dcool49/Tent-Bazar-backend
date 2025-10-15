@@ -12,7 +12,7 @@ var User = mongoose.Schema({
     pinCode:{type:Number,default:null},
     role: {
         type:String, 
-        enum :['admin','user','manager','seller'],
+        enum :['admin','user','manager','employee'],
         default:'user'
     }
 },{
