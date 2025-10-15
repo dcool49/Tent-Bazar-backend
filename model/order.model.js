@@ -14,7 +14,7 @@ var Order = mongoose.Schema({
     orderId: {
         type: Number
     },
-    sellerId: {
+    empId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
@@ -45,6 +45,9 @@ var Order = mongoose.Schema({
     },
     pinCode : {
         type : Number
+    },
+      worklog : {
+        type : String
     }
 }, {
     timestamps: true

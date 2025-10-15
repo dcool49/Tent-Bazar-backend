@@ -10,7 +10,8 @@ exports.add = (req, res, next) => {
         data: [],
         error: null
     };
-    if (req.body.productDetails && req.body.sellerId && req.body.buyerId) {
+    if (req.body.productDetails && req.body.buyerId) {
+
         new Order(req.body).save()
             .then((result) => {
                 response.status = true;
@@ -40,7 +41,7 @@ exports.fetch = (req, res, next) => {
         data: [],
         error: null
     };
-    Order.find({}).populate([{path : 'sellerId', select : "-password"},{path : 'buyerId', select : "-password"},'productDetails.productId'])
+    Order.find({}).populate([{path : 'empId', select : "-password"},{path : 'buyerId', select : "-password"},'productDetails.productId'])
         .then((result) => {
             response.status = true,
                 response.message = 'Data Found',
