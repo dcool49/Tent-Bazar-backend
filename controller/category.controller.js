@@ -80,7 +80,7 @@ exports.fetch = (req, res, next) => {
         data: [],
         error: null
     }
-    Category.find()
+    Category.find().sort({rank : 1})
         .then((result) => {
 
             response.data = common.manageImageName(result, '/CategoryImage/');
@@ -105,8 +105,9 @@ exports.update = (req, res, next) => {
         data: [],
         err: null
     }
-    if (req.body._id && req.body.categoryName) {
-        Category.findByIdAndUpdate({ _id: req.body._id }, { $set: { categoryName: req.body.categoryName } })
+    if (req.body._id ) {
+        const _id = req.body._id;
+        Category.findByIdAndUpdate({ _id: _id }, { $set: req.body })
             .then((updateresult) => {
                 response.status = true;
                 response.message = 'Data update successfully';

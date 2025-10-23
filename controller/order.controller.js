@@ -33,7 +33,6 @@ exports.add = (req, res, next) => {
     }
 }
 
-
 exports.fetch = (req, res, next) => {
     var response = {
         status: false,
@@ -41,7 +40,7 @@ exports.fetch = (req, res, next) => {
         data: [],
         error: null
     };
-    Order.find({}).populate([{path : 'empId', select : "-password"},{path : 'buyerId', select : "-password"},'productDetails.productId'])
+    Order.find({}).populate([{ path: 'empId', select: "-password" }, { path: 'buyerId', select: "-password" }, 'productDetails.productId'])
         .then((result) => {
             response.status = true,
                 response.message = 'Data Found',
@@ -53,4 +52,34 @@ exports.fetch = (req, res, next) => {
                 response.error = error
             res.send(response)
         })
+}
+
+exports.update = (req, res, next) => {
+    var response = {
+        status: false,
+        message: "",
+        data: [],
+        error: null
+    };
+    if (req.body._id) {
+        const _id = req.body._id;
+        Order.findByIdAndUpdate({ _id: _id }, { $set: req.body })
+            .then((updateresult) => {
+                response.status = true;
+                response.message = 'Data update successfully';
+                response.data = updateresult
+                res.send(response)
+            })
+            .catch((error) => {
+                console.log('am in catch 1', error);
+                response.status = false;
+                response.message = 'unable to update';
+                response.data = error
+                res.send(response)
+            })
+    }
+    else {
+        response.message = "invalid data";
+        res.status(400).send(response);
+    }
 }
