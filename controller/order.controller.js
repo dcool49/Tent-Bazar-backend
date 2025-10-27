@@ -2,6 +2,7 @@ var Order = require("./../model/order.model");
 var User = require("./../model/user.model");
 var Product = require("./../model/product.model");
 var mongoose = require('mongoose');
+var common = require('./../common/common');
 
 exports.add = (req, res, next) => {
     var response = {
@@ -11,7 +12,7 @@ exports.add = (req, res, next) => {
         error: null
     };
     if (req.body.productDetails && req.body.buyerId) {
-
+        req.body.status = 'TO-DO';
         new Order(req.body).save()
             .then((result) => {
                 response.status = true;
@@ -40,11 +41,11 @@ exports.fetch = (req, res, next) => {
         data: [],
         error: null
     };
-    Order.find({}).populate([{ path: 'empId', select: "-password" }, { path: 'buyerId', select: "-password" }, 'productDetails.productId'])
+    Order.find(req.query).populate([{ path: 'empId', select: "-password" }, { path: 'buyerId', select: "-password" }, 'productDetails.productId'])
         .then((result) => {
-            response.status = true,
-                response.message = 'Data Found',
-                response.data = result,
+            response.status = true;
+                response.message = 'Data Found';
+                response.data= common.manageImageNameForOrder(result,'/ProductImage/');
                 res.send(response)
         })
         .catch((error) => {

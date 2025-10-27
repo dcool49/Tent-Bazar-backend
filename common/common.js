@@ -22,7 +22,7 @@ exports.saveImage = (array, foldername) => {
                             resolve(imagename)
                         }
                     }
-                })           
+                })
             }
         })
     } catch (error) {
@@ -36,11 +36,26 @@ exports.manageImageName = (array, foldername) => {
             for (let j = 0; j < array[i].image.length; j++) {
                 if (!array[i].image[j].img_name.includes('cataloguebucket')) {
                     array[i].image[j].img_name = 'http://' + config.HOST + ':' + config.PORT + foldername + array[i].image[j].img_name;
-            }        
+                }
+            }
         }
     }
+    return array;
+}
+
+exports.manageImageNameForOrder = (array, foldername) => {
+    for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array[i].productDetails.length; j++) {
+            for (let k = 0; k < array[i].productDetails[j].productId.image.length; k++) {
+                if (!array[i].productDetails[j].productId.image[k].img_name.includes('cataloguebucket')) {
+                    array[i].productDetails[j].productId.image[k].img_name = 'http://' + config.HOST + ':' + config.PORT + foldername + array[i].productDetails[j].productId.image[k].img_name;
+                }
+            }
+
+        }
+
     }
-    return array;   
+    return array;
 }
 
 
@@ -51,10 +66,10 @@ exports.manageImageNameForBanner = (array, foldername) => {
                 if (!array[i].bannerImage[j].img_name.includes('cataloguebucket')) {
                     array[i].bannerImage[j].img_name = 'http://' + config.HOST + ':' + config.PORT + foldername + array[i].bannerImage[j].img_name;
                 }
-            }        
+            }
         }
     }
-    return array;   
+    return array;
 }
 
 

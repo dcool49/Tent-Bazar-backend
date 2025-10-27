@@ -23,6 +23,7 @@ exports.add = (req, res, next) => {
                     console.log(" === 798798== ", result1);
                     new Category({
                         categoryName: req.body.categoryName,
+                        status: 'Active',
                         image: result1
                     }).save()
                         .then((result) => {
@@ -48,7 +49,8 @@ exports.add = (req, res, next) => {
 
         } else {
             new Category({
-                categoryName: req.body.categoryName
+                categoryName: req.body.categoryName,
+                status: 'Active'
             }).save()
                 .then((result) => {
                     console.log(" here 1");
@@ -80,7 +82,7 @@ exports.fetch = (req, res, next) => {
         data: [],
         error: null
     }
-    Category.find().sort({rank : 1})
+    Category.find(req.query).sort({ rank: 1 })
         .then((result) => {
 
             response.data = common.manageImageName(result, '/CategoryImage/');
@@ -105,7 +107,7 @@ exports.update = (req, res, next) => {
         data: [],
         err: null
     }
-    if (req.body._id ) {
+    if (req.body._id) {
         const _id = req.body._id;
         Category.findByIdAndUpdate({ _id: _id }, { $set: req.body })
             .then((updateresult) => {
@@ -225,63 +227,61 @@ exports.imageDelete = (req, res, next) => {
 
 }
 
-exports.updateImage =(req,res,next)=>{
+exports.updateImage = (req, res, next) => {
     var response = {
-        
-        status:false,
-        message:'',
-        data:[],
-        err:null
- }
- if(req.body._id && req.files && req.files.files)
-    {
-    
+
+        status: false,
+        message: '',
+        data: [],
+        err: null
+    }
+    if (req.body._id && req.files && req.files.files) {
+
         var files = req.files.files;
-        if (!Array.isArray(files)) { 
-            files =  [files];
+        if (!Array.isArray(files)) {
+            files = [files];
         }
-          common.saveImageToS3(files,'./public/CategoryImage/')
-          
-          .then((result)=>{
-          
-            console.log(' result ',result);
-            if(result.length==1)
-            {
-                
-             Category.findByIdAndUpdate({_id:req.body._id},{$set:{image:result}})
-             .then((updateresult) =>{
-                response.status=true;
-                response.message='Data update successfully';
-                response.data=updateresult
-                res.send(response)
+        common.saveImageToS3(files, './public/CategoryImage/')
+
+            .then((result) => {
+
+                console.log(' result ', result);
+                if (result.length == 1) {
+
+                    Category.findByIdAndUpdate({ _id: req.body._id }, { $set: { image: result } })
+                        .then((updateresult) => {
+                            response.status = true;
+                            response.message = 'Data update successfully';
+                            response.data = updateresult
+                            res.send(response)
+                        })
+                        .catch((error) => {
+                            console.log('am in catch 1', error);
+                            response.status = false;
+                            response.message = 'unable to update';
+                            response.data = error
+                            res.send(response)
+                        })
+                }
+                else {
+
+                    response.status = false;
+                    response.message = 'only one image';
+                    res.send(response)
+                }
             })
-            .catch((error)=>{
-                console.log('am in catch 1',error);
-                response.status=false;
-                response.message='unable to update';
-                response.data=error
-                res.send(response)
-         })
-        }
-        else{
-    
-            response.status=false;
-            response.message='only one image';
-            res.send(response)
-        }
-     })
-     
-     .catch((error)=>{
-            console.log('am in catch 2',error);
-            response.status=false;
-            response.message='unable to update';
-            response.data=error
-            res.send(response);
-        })
-     }
-     
-     else{
-        response.message="invalid data";
+
+            .catch((error) => {
+                console.log('am in catch 2', error);
+                response.status = false;
+                response.message = 'unable to update';
+                response.data = error
+                res.send(response);
+            })
+    }
+
+    else {
+        response.message = "invalid data";
         res.status(400).send(response);
     }
 }

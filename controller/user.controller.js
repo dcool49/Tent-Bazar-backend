@@ -51,8 +51,9 @@ exports.fetch = (req, res, next) => {
         message: "",
         data: [],
         error: null
-    }
-    User.find().select('-password')
+    };
+
+    User.find(req.query).select('-password')
         .then((result) => {
             response.status = true,
                 response.message = 'Data Found',
@@ -218,7 +219,7 @@ exports.validateUser = async (req, res, next) => {
     
     // The update defines the data for a new record if it needs to be created.
     // Use $set to only update or set specified fields.
-    const update = { $set: { mobile: mobile } };
+    const update = { $set: { mobile: mobile , role : 'user'} };
 
     // You can add other fields from req.body if desired.
     if (name) {
