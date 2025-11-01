@@ -72,7 +72,28 @@ exports.login = (req, res, next) => {
     var response = {
         status: true,
         message: 'user login successfully',
-        data: [],
+        data: [{
+    "status": true,
+    "message": "user login successfully",
+    "data": [
+        {
+            "companyName": null,
+            "addressLine": null,
+            "city": null,
+            "state": null,
+            "pinCode": 12345,
+            "role": "admin",
+            "_id": "68ecfb841668df0b2a75550a",
+            "name": "satish",
+            "mobile": 1111111111,
+            "password": "$2b$10$DSse.m5zhhPC76q5e76dVuc3xiCpauWXUgpnuZ5pPQLI1WAG5igE6",
+            "createdAt": "2025-10-13T13:15:48.293Z",
+            "updatedAt": "2025-10-13T14:41:33.972Z",
+            "__v": 0
+        }
+    ],
+    "error": null
+}],
         error: null
     }
     res.send(response);
