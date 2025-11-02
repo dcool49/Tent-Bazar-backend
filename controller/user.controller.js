@@ -3,45 +3,28 @@ const common = require("../common/encypt");
 
 
 exports.register = (req, res, next) => {
-    var response = {
-        status: false,
-        message: "",
-        data: [],
-        error: null
-    }
-    if (req.body.mobile && req.body.password && req.body.name && req.body.role) {
-        common.generatePassword(req.body.password)
-            .then((passwordHash) => {
-                var user = new User({
-                    name: req.body.name,
-                    mobile: req.body.mobile,
-                    password: passwordHash,
-                    role: req.body.role,
-                    city: req.body.city,
-                    addressLine: req.body.addressLine,
-                    pinCode: req.body.pinCode,
-                    address: req.body.address,
-                    state: req.body.state
-                })
-                user.save()
-                    .then((result) => {
-                        //res.send({message:'user register successfully', status:true, _id:result._id})
-                        response.status = true,
-                            response.message = "Registration done successfully";
-                        response.data = result
-                        res.send(response)
-                    })
-                    .catch((error) => {
-                        response.status = false,
-                            response.message = "unable to register";
-                        response.data = error
-                        res.send(response)
-                    })
-            })
-    } else {
-        response.message = "Invalid data"
-        res.status(400).send(response);
-    }
+    var response = 
+    {
+    "status": true,
+    "message": "Registration done successfully",
+    "data": {
+        "companyName": null,
+        "addressLine": null,
+        "city": null,
+        "state": null,
+        "pinCode": null,
+        "role": "admin",
+        "_id": "68ecfb841668df0b2a75550a",
+        "name": "satish",
+        "mobile": 545454,
+        "password": "$2b$10$DSse.m5zhhPC76q5e76dVuc3xiCpauWXUgpnuZ5pPQLI1WAG5igE6",
+        "createdAt": "2025-10-13T13:15:48.293Z",
+        "updatedAt": "2025-10-13T13:15:48.293Z",
+        "__v": 0
+    },
+    "error": null
+}
+res.send(response);
 };
 
 
@@ -168,6 +151,48 @@ exports.loginNew = (req, res, next) => {
     }
 }
 
+exports.registerNew = (req, res, next) => {
+    var response = {
+        status: false,
+        message: "",
+        data: [],
+        error: null
+    }
+    if (req.body.mobile && req.body.password && req.body.name && req.body.role) {
+        common.generatePassword(req.body.password)
+            .then((passwordHash) => {
+                var user = new User({
+                    name: req.body.name,
+                    mobile: req.body.mobile,
+                    password: passwordHash,
+                    role: req.body.role,
+                    city: req.body.city,
+                    addressLine: req.body.addressLine,
+                    pinCode: req.body.pinCode,
+                    address: req.body.address,
+                    state: req.body.state
+                })
+                user.save()
+                    .then((result) => {
+                        //res.send({message:'user register successfully', status:true, _id:result._id})
+                        response.status = true,
+                            response.message = "Registration done successfully";
+                        response.data = result
+                        res.send(response)
+                    })
+                    .catch((error) => {
+                        response.status = false,
+                            response.message = "unable to register";
+                        response.data = error
+                        res.send(response)
+                    })
+            })
+    } else {
+        response.message = "Invalid data"
+        res.status(400).send(response);
+    }
+};
+
 exports.update = async (req, res, next) => {
     // 1. Initialize the response object
     var response = {
@@ -219,6 +244,7 @@ exports.update = async (req, res, next) => {
         res.status(500).send(response);
     }
 };
+
 
 exports.validateUser = async (req, res, next) => {
     var response = {
