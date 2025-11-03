@@ -41,7 +41,7 @@ exports.fetch = (req, res, next) => {
         data: [],
         error: null
     };
-    Order.find(req.query).populate([{ path: 'empId', select: "-password" }, { path: 'buyerId', select: "-password" }, 'productDetails.productId'])
+    Order.find(req.query).populate([{ path: 'empId', select: ["-password","-passwordToShow"] }, { path: 'buyerId', select: ["-password","-passwordToShow"] }, 'productDetails.productId'])
         .then((result) => {
             response.status = true;
                 response.message = 'Data Found';

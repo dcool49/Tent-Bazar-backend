@@ -6,10 +6,6 @@ router.post('/register',user.register);
 
 router.post('/login',user.login);
 
-router.post('/v2/login',user.loginNew);
-
-router.post('/v2/register',user.registerNew);
-
 router.get('/fetch', user.fetch);
 
 router.patch('/update', user.update);

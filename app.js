@@ -9,6 +9,7 @@ var fs = require('fs')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var userRouter = require('./router/user.router')
+var userV2Router = require('./router/usernewv.router')
 var productRouter=require('./router/product.router')
 var categoryRouter= require('./router/category.router')
 var bannerRouter = require('./router/banner.router');
@@ -42,6 +43,7 @@ app.use(fileUpload());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/user',userRouter);
+app.use('/api/user/v2',userV2Router);
 app.use('/api/product',productRouter);
 app.use('/api/category',categoryRouter);
 app.use('/api/banner',bannerRouter);

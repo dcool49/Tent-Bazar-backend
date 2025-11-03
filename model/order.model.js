@@ -16,7 +16,7 @@ var Order = mongoose.Schema({
     },
     empId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'UserNewV'
     },
     buyerId: {
         type: mongoose.Schema.Types.ObjectId,
