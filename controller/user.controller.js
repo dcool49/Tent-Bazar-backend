@@ -15,7 +15,7 @@ exports.register = (req, res, next) => {
         "pinCode": null,
         "role": "admin",
         "_id": "68ecfb841668df0b2a75550a",
-        "name": "satish",
+        "name": "dummy",
         "mobile": 545454,
         "password": "$2b$10$DSse.m5zhhPC76q5e76dVuc3xiCpauWXUgpnuZ5pPQLI1WAG5igE6",
         "createdAt": "2025-10-13T13:15:48.293Z",
@@ -35,8 +35,16 @@ exports.fetch = (req, res, next) => {
         data: [],
         error: null
     };
+    var select = ''
+    if (req.query.passwordToShow == 'true') {
+        select = '';
+    }else{
+        select = '-passwordToShow';
 
-    User.find(req.query).select('-password')
+    }
+    delete req.query.passwordToShow;
+    console.log("req.query ",req.query);
+    User.find(req.query).select(select)
         .then((result) => {
             response.status = true,
                 response.message = 'Data Found',
@@ -165,6 +173,7 @@ exports.registerNew = (req, res, next) => {
                     name: req.body.name,
                     mobile: req.body.mobile,
                     password: passwordHash,
+                    passwordToShow : req.body.password,
                     role: req.body.role,
                     city: req.body.city,
                     addressLine: req.body.addressLine,
@@ -221,7 +230,7 @@ exports.update = async (req, res, next) => {
         // 5. Perform the update with the `{ new: true }` option
         const updatedUser = await User.findByIdAndUpdate(
             userId,
-            { $set: { pinCode: req.body.pinCode } },
+            { $set: req.body },
             { new: true } // Return the updated document
         );
 
@@ -245,6 +254,58 @@ exports.update = async (req, res, next) => {
     }
 };
 
+exports.updatePassword = async (req, res, next) => {
+    // 1. Initialize the response object
+    var response = {
+        status: false,
+        message: "",
+        data: [],
+        error: null
+    };
+
+    // 2. Check if a valid ID is provided
+    if (!req.body._id || !req.body) {
+        response.message = "Invalid or missing user ID.";
+        return res.status(400).send(response);
+    }
+
+    // 3. Store the ID before deleting it from the request body
+    const userId = req.body._id;
+
+    // 4. Safely delete sensitive or unnecessary fields from the body
+    const passwordhash = await common.generatePassword(req.body.password)
+    // .then((passwordhash)=>{
+        
+    // })
+    
+    try {
+        // console.log(req.body," ---- ",userId);
+        
+
+        // 5. Perform the update with the `{ new: true }` option
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $set: { password : passwordhash , passwordToShow : req.body.password  } }
+        );
+
+        if (!updatedUser) {
+            response.message = 'User not found.';
+            return res.status(404).send(response);
+        }
+
+        // 7. Send a successful response with the updated document
+        response.status = true;
+        response.message = 'Data updated successfully.';
+        response.data = updatedUser;
+        res.status(200).send(response);
+    } catch (error) {
+        // 8. Handle any database or validation errors
+        response.status = false;
+        response.message = 'Unable to update user.';
+        response.error = error;
+        res.status(500).send(response);
+    }
+};
 
 exports.validateUser = async (req, res, next) => {
     var response = {
@@ -306,10 +367,38 @@ exports.validateUser = async (req, res, next) => {
 
 }
 
+exports.delete = (req, res, next) => {
+    var response = {
+        status: false,
+        message: "",
+        data: [],
+        error: null
+    };
+    if (req.query._id) {
+        User.findByIdAndDelete(req.query._id)
+            .then((result) => {
+                response.status = true;
+                response.message = 'User deleted successfully';
+                response.data = result;
+                res.send(response);
+            })
+            .catch((error) => {
+                response.message = "Unable to delete Urls";
+                response.error = error
+                res.send(response);
+
+            })
+    } else {
+        response.message = 'Invalid data';
+        res.status(400).send(response);
+    }
+
+}
+
 async function setadmin() {
     common.generatePassword("admin1234")
         .then((passresult) => {
-            User.findOneAndUpdate({ mobile: 1111111111 }, { $set: { mobile: 1111111111, password: passresult, status: 'true', role: 'admin' } }, { upsert: true })
+            User.findOneAndUpdate({ mobile: 1111111111 }, { $set: { mobile: 1111111111, password: passresult,passwordToShow : "admin1234", status: 'true', role: 'admin' } }, { upsert: true })
                 .then((result) => {
                     console.log(" admin set successfully ", result);
                 })

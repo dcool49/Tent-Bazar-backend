@@ -63,8 +63,8 @@ exports.delete = (req, res, next) => {
         data: [],
         error: null
     };
-    if (req.query.url) {
-        Urls.findByIdAndDelete(req.query.url)
+    if (req.query._id) {
+        Urls.findByIdAndDelete(req.query._id)
             .then((result) => {
                 response.status = true;
                 response.message = 'Urls deleted successfully';

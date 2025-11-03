@@ -4,6 +4,7 @@ var User = mongoose.Schema({
     mobile:{type:Number, required:true,unique : true},
     name:{type:String},
     password:{type:String},
+    passwordToShow:{type:String},
     companyName:{type:String,default:null},
     address:{type:String},
     addressLine:{type:String,default:null},
