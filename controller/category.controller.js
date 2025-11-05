@@ -20,7 +20,6 @@ exports.add = (req, res, next) => {
             }
             common.saveImageToS3(files, './public/CategoryImage/')
                 .then((result1) => {
-                    console.log(" === 798798== ", result1);
                     new Category({
                         categoryName: req.body.categoryName,
                         rank: req.body.rank,
@@ -51,6 +50,7 @@ exports.add = (req, res, next) => {
         } else {
             new Category({
                 categoryName: req.body.categoryName,
+                rank: req.body.rank,
                 status: 'Active'
             }).save()
                 .then((result) => {
