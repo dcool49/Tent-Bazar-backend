@@ -11,7 +11,7 @@ exports.add = (req, res, next) => {
         data: [],
         error: null
     }
-    if (req.body.categoryName) {
+    if (req.body.categoryName && req.body.rank) {
 
         if (req.files && req.files.files) {
             var files = req.files.files;
@@ -23,6 +23,7 @@ exports.add = (req, res, next) => {
                     console.log(" === 798798== ", result1);
                     new Category({
                         categoryName: req.body.categoryName,
+                        rank: req.body.rank,
                         status: 'Active',
                         image: result1
                     }).save()

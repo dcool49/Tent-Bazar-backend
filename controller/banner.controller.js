@@ -10,18 +10,18 @@ exports.add = (req, res, next) => {
         data: [],
         error: null
     }
-    if (req.body.bannerName && req.files && req.files.files) {
-        console.log(' -- ');
+    if (req.body.bannerName &&  req.body.rank && req.files && req.files.files) {
         var files = req.files.files;
         if (!Array.isArray(files)) {
             files = [files];
         }
         if (files.length == 1) {
             common.saveImageToS3(files, './public/BannerImage/')
-                .then((result) => {
+            .then((result) => {
                     console.log('first', result);
                     new Banner({
                         bannerName: req.body.bannerName,
+                        rank: req.body.rank,
                         bannerImage: result
                     }).save()
                         .then((result1) => {
@@ -46,12 +46,12 @@ exports.add = (req, res, next) => {
                 })
 
         } else {
-            response.message = 'Invalid userid';
+            response.message = 'Invalid data';
             res.status(400).send(response);
         }
 
     } else {
-        response.message = 'Invalid userid';
+        response.message = 'Invalid data';
         res.status(400).send(response);
     }
 }
@@ -67,12 +67,6 @@ exports.delete = (req, res, next) => {
         _id = req.query._id
         Banner.findByIdAndDelete(_id)
             .then((result) => {
-
-                fs.unlinkSync('public/BannerImage/' + result.bannerImage[0].img_name, (err) => {
-                    console.log(' err ', err);
-                    console.log("image deleted successfully");
-                    // response.message = "Banner deleted successfully";
-                })
                 response.message = "Banner deleted successfully";
                 response.status = true;
                 res.send(response)
@@ -142,5 +136,64 @@ exports.update = (req, res, next) => {
 
     } else {
         res.status(400).send({ message: "Invalid data", status: false })
+    }
+}
+
+exports.updateImage = (req, res, next) => {
+    var response = {
+
+        status: false,
+        message: '',
+        data: [],
+        err: null
+    }
+    if (req.body._id && req.files && req.files.files) {
+
+        var files = req.files.files;
+        if (!Array.isArray(files)) {
+            files = [files];
+        }
+        common.saveImageToS3(files, './public/CategoryImage/')
+
+            .then((result) => {
+
+                console.log(' result ', result);
+                if (result.length == 1) {
+
+                    Banner.findByIdAndUpdate({ _id: req.body._id }, { $set: { bannerImage: result } })
+                        .then((updateresult) => {
+                            response.status = true;
+                            response.message = 'Data update successfully';
+                            response.data = updateresult
+                            res.send(response)
+                        })
+                        .catch((error) => {
+                            console.log('am in catch 1', error);
+                            response.status = false;
+                            response.message = 'unable to update';
+                            response.data = error
+                            res.send(response)
+                        })
+                }
+                else {
+
+                    response.status = false;
+                    response.message = 'only one image';
+                    res.send(response)
+                }
+            })
+
+            .catch((error) => {
+                console.log('am in catch 2', error);
+                response.status = false;
+                response.message = 'unable to update';
+                response.data = error
+                res.send(response);
+            })
+    }
+
+    else {
+        response.message = "invalid data";
+        res.status(400).send(response);
     }
 }

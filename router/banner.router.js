@@ -8,6 +8,8 @@ router.get('/fetch', banner.fetch);
 
 router.delete('/delete',banner.delete);
 
-router.patch('/udpate',banner.update)
+router.patch('/udpate',banner.update);
+
+router.patch('/updateImage',banner.updateImage);
 
 module.exports = router
