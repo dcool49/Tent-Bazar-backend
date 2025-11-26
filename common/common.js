@@ -35,7 +35,7 @@ exports.manageImageName = (array, foldername) => {
         if (array[i].image) {
             for (let j = 0; j < array[i].image.length; j++) {
                 if (!array[i].image[j].img_name.includes('cataloguebucket')) {
-                    array[i].image[j].img_name = 'http://' + config.HOST + ':' + config.PORT + foldername + array[i].image[j].img_name;
+                    array[i].image[j].img_name = config.HOSTURL + foldername + array[i].image[j].img_name;
                 }
             }
         }
@@ -48,7 +48,7 @@ exports.manageImageNameForOrder = (array, foldername) => {
         for (let j = 0; j < array[i].productDetails.length; j++) {
             for (let k = 0; k < array[i].productDetails[j].productId.image.length; k++) {
                 if (!array[i].productDetails[j].productId.image[k].img_name.includes('cataloguebucket')) {
-                    array[i].productDetails[j].productId.image[k].img_name = 'http://' + config.HOST + ':' + config.PORT + foldername + array[i].productDetails[j].productId.image[k].img_name;
+                    array[i].productDetails[j].productId.image[k].img_name = config.HOSTURL + foldername + array[i].productDetails[j].productId.image[k].img_name;
                 }
             }
 
@@ -64,7 +64,7 @@ exports.manageImageNameForBanner = (array, foldername) => {
         if (array[i].bannerImage) {
             for (let j = 0; j < array[i].bannerImage.length; j++) {
                 if (!array[i].bannerImage[j].img_name.includes('cataloguebucket')) {
-                    array[i].bannerImage[j].img_name = 'http://' + config.HOST + ':' + config.PORT + foldername + array[i].bannerImage[j].img_name;
+                    array[i].bannerImage[j].img_name = config.HOSTURL + foldername + array[i].bannerImage[j].img_name;
                 }
             }
         }
