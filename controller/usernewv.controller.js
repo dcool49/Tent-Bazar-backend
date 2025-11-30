@@ -1,5 +1,6 @@
 var userV2 = require('../model/usernewv.model');
 const common = require("../common/encypt");
+const commonJwt = require("../common/common");
 
 
 exports.fetch = (req, res, next) => {
@@ -36,6 +37,7 @@ exports.loginNew = (req, res, next) => {
         status: false,
         message: "",
         data: [],
+        token: "",
         error: null
     }
     if (req.body.mobile && req.body.password) {
@@ -52,6 +54,7 @@ exports.loginNew = (req, res, next) => {
                             response.status = true;
                             response.message = 'user login successfully';
                             response.data = result
+                            response.token =  commonJwt.generateToken(result[0]._id);
                             res.send(response);
                         } else {
                             response.status = false;

@@ -1,5 +1,7 @@
 var config = require('./../config');
 const AWS = require('aws-sdk');
+const jwt = require('jsonwebtoken');
+
 
 const s3 = new AWS.S3({
     accessKeyId: config.ACCESS_KEY,
@@ -106,5 +108,19 @@ exports.saveImageToS3 = async (array, foldername) => {
         })
     } catch (error) {
         reject(error)
+    }
+}
+
+exports.generateToken = (data) => {
+    return jwt.sign({ foo: 'bar' }, 'shhhhh');
+}
+
+exports.verifyToken = (req,res,next) => {
+    try {
+        const token = req.headers['authorization'].split(' ')[1];
+        jwt.verify(token, "shhhhh");     
+        next();
+    } catch (error) {
+        return res.status(401).send({message:"Unauthorized user"});
     }
 }
