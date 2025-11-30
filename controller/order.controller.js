@@ -41,7 +41,13 @@ exports.fetch = (req, res, next) => {
         data: [],
         error: null
     };
-    Order.find(req.query).populate([{ path: 'empId', select: ["-password","-passwordToShow"] }, { path: 'buyerId', select: ["-password","-passwordToShow"] }, 'productDetails.productId'])
+    var inputVaule = req.body;
+    for (let key in inputVaule) {
+        if (!inputVaule[key]) {
+            delete inputVaule[key];
+        }
+    }
+    Order.find(inputVaule).populate([{ path: 'empId', select: ["-password","-passwordToShow"] }, { path: 'buyerId', select: ["-password","-passwordToShow"] }, 'productDetails.productId'])
         .then((result) => {
             response.status = true;
                 response.message = 'Data Found';

@@ -4,7 +4,7 @@ var order = require('./../controller/order.controller')
 
 router.post('/add',order.add);
 
-router.get('/fetch',order.fetch);
+router.post('/fetch',order.fetch);
 
 router.patch('/update',order.update);
 
