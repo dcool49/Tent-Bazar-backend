@@ -8,7 +8,7 @@ router.post('/add',order.add);
 
 router.post('/fetch',order.fetch);
 
-router.patch('/update',common.verifyToken, order.update);
+router.patch('/update', order.update);
 
 
 module.exports=router
