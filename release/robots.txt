@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tentbazaar.in/sitemap.xml

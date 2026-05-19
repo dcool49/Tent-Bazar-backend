@@ -1,0 +1,1 @@
+import{a}from"./chunk-GBRF6CV4.js";import"./chunk-OUCMHSLN.js";import"./chunk-D6HUGY2F.js";import"./chunk-L7ADZB3B.js";import"./chunk-QV4OCDDT.js";import"./chunk-JXI73FLK.js";import"./chunk-EQDQRRRY.js";export{a as OfferServiceComponent};
