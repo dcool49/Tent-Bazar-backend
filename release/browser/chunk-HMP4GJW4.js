@@ -1,4 +1,4 @@
-import{a as C,c as v,d as E,f as _,h as M,i as D,p as W,q as V}from"./chunk-OSCV47W7.js";import"./chunk-2SLIWS2U.js";import{$ as m,Eb as S,Fb as n,Lb as p,Mb as g,Na as s,Nb as f,Za as y,aa as d,jb as h,ob as e,pb as t,qb as u,tb as x,yb as w}from"./chunk-7NBPSTWL.js";import"./chunk-EQDQRRRY.js";var N=class b{formData={name:"",email:"",subject:"",message:""};whatsappNumber="919279974675";onSubmit(){let{name:c,email:r,subject:a,message:o}=this.formData,l=`*New Contact Form Submission*
+import{a as C,c as v,d as E,f as _,h as M,i as D,p as W,r as V}from"./chunk-VVP3YA7P.js";import"./chunk-2SLIWS2U.js";import{$ as m,Eb as S,Fb as n,Lb as p,Mb as g,Na as s,Nb as f,Za as y,aa as d,jb as h,ob as e,pb as t,qb as u,tb as x,yb as w}from"./chunk-7NBPSTWL.js";import"./chunk-EQDQRRRY.js";var N=class b{formData={name:"",email:"",subject:"",message:""};whatsappNumber="919279974675";onSubmit(){let{name:c,email:r,subject:a,message:o}=this.formData,l=`*New Contact Form Submission*
 *Name:* ${c}
 *Email:* ${r}
 *Subject:* ${a}
