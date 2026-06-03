@@ -42,9 +42,9 @@ exports.dashboard = async (req, res, next) => {
         const isDateFilterApplied = !!(currentStart || currentEnd);
 
         response.data.widget.orders = await Order.countDocuments(isDateFilterApplied ? dateFilter : {});
-        response.data.widget.users = await User.countDocuments(isDateFilterApplied ? dateFilter : {});
-        response.data.widget.employee = await UserNewV.countDocuments(isDateFilterApplied ? { role: "employee", createdAt: dateFilter.createdAt } : { role: "employee" });
-        response.data.widget.product = await Product.countDocuments(isDateFilterApplied ? dateFilter : {});
+        response.data.widget.users = await User.countDocuments({});
+        response.data.widget.employee = await UserNewV.countDocuments({ role: "employee" });
+        response.data.widget.product = await Product.countDocuments({});
         response.data.widget.category = await Category.countDocuments();
         // Aggregate counts per status and produce a single object mapping each expected
         // status to its count. Missing statuses will be present with value 0.
