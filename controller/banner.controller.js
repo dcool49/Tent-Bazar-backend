@@ -91,7 +91,7 @@ exports.fetch = (req, res, next) => {
         error: null
     };
 
-    Banner.find().sort({rank : 1})
+    Banner.find().sort({ rank: 1 }).exec()
         .then((result) => {
             response.data = common.manageImageNameForBanner(result, '/BannerImage/');
             if (response.data.length) {
