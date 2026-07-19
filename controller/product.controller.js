@@ -128,7 +128,7 @@ exports.update = (req, res, next) => {
         error: null
     }
     if (req.body._id) {
-        Product.findByIdAndUpdate(req.body._id, { $set: { productName: req.body.productName, price: req.body.price, summery: req.body.summery, product_selling_price: req.body.product_selling_price, product_discount_price: req.body.product_discount_price } })
+        Product.findByIdAndUpdate(req.body._id, { $set: { productName: req.body.productName, price: req.body.price, summery: req.body.summery, product_selling_price: req.body.product_selling_price, product_discount_price: req.body.product_discount_price, category_id : req.body.category_id } })
             .then((result1) => {
                 response.status = true;
                 response.message = "Data updated Successfully";
