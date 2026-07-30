@@ -142,7 +142,6 @@ exports.update = async (req, res, next) => {
     delete req.body.password;
     delete req.body.mobile;
     delete req.body._id;
-    delete req.body.role;
 
     try {
         // 5. Perform the update with the `{ new: true }` option
